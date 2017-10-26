@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<!-- <script src="d3.min.js"></script> -->
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> 
+	<style type="text/css">
+		
+	</style>
+</head>
+<body>
+<script>
+var width = 400;  //画布的宽度
+var height = 400;   //画布的高度
+
+var svg = d3.select("body")     //选择文档中的body元素
+    .append("svg")          //添加一个svg元素
+    .attr("width", width)       //设定宽度
+    .attr("height", height);    //设定高度
+
+
+var dataset = [ 30 , 10 , 43 , 55 , 13 ];
+var pie = d3.layout.pie();
+// console.log(pie)
+var piedata = pie(dataset);
+console.log(piedata);
+
+
+var outerRadius = 150; //外半径
+var innerRadius = 0; //内半径，为0则中间没有空白
+
+var arc = d3.svg.arc()  //弧生成器
+    .innerRadius(innerRadius)   //设置内半径
+    .outerRadius(outerRadius);  //设置外半径
+
+var arcs = svg.selectAll("g")
+    .data(piedata)
+    .enter()
+    .append("g")
+    .attr("transform","translate("+ (width/2) +","+ (width/2) +")");
+
+var color = d3.scale.category10();   //有十种颜色的颜色比例尺
+// console.log(color);
+arcs.append("path")
+    .attr("fill",function(d,i){
+        return color(i);
+    })
+    .attr("d",function(d){
+        return arc(d);   // 调用弧生成器，得到路径值
+    });
+
+arcs.append("text")
+    .attr("transform",function(d){
+        return "translate(" + arc.centroid(d) + ")";
+    })
+    .attr("text-anchor","middle")
+    .text(function(d){
+        return d.data;
+    });
+
+
+</script>
+</body>
+</html>

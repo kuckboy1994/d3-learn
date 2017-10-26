@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="d3.min.js"></script>
+</head>
+<body>
+	<p>Hello World 1</p>
+	<p id="myid">Hello World 2</p>
+	<p>Hello World 3</p>
+<script>
+	// console.log(d3.select("body").selectAll("p"))
+	// d3.select("body").selectAll("p").text("www.ourd3js.com").style("color","red").style("font-size", "72px");
+	
+/*	var str = "China";
+
+var body = d3.select("body");
+var p = body.selectAll("p");
+
+p.datum(str);
+
+p.text(function(d, i){
+    return "第 "+ i + " 个元素绑定的数据是 " + d;
+});*/
+
+/*var dataset = ["I like dogs","I like cats","I like snakes"];
+var body = d3.select("body");
+var p = body.selectAll("p");
+
+p.data(dataset)
+  .text(function(d, i){
+      return d;
+  });
+*/
+
+var body = d3.select("body");
+// body.append("p")
+    // .text("append p element");
+body.insert("p","#myid")
+  .text("insert p element");
+
+var p = body.select("#myid");
+p.remove();
+
+
+
+
+
+
+</script>
+</body>
+</html>
