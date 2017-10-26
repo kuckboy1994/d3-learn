@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <p>Apple</p>
+    <p>Banana</p>
+    <p>Pear</p>
+<script>
+// 1. 选择集
+// d3.select 所有指定集中的第一个元素
+// d3.selectAll 所有指定集中的全部元素
+var body = d3.select('body');
+// var p = body.select('p');
+// p.style('color', 'red');
+
+// var ps = body.selectAll('p')
+// ps.style('color', 'blue');
+
+// 2. 数据绑定
+// var num = 30;
+// var p = body.selectAll('p');
+// p.datum(num);
+// p.text(function (d, i) {
+//     return d + ' ' + i;
+// })
+// console.log(p)
+
+var dataset = [30, 40, 50, 60, 70];
+var p = body.selectAll('p');
+// p.data(dataset);
+// p.text(function (d) {
+//     return d;
+// })
+
+var update = p.data(dataset);
+var enter = update.enter();
+var exit = update.exit();
+console.log(update);
+console.log(enter);
+console.log(exit);
+
+update.text(function (d) {
+    return d;
+})
+
+enter.append('p').text(function (d) {
+    return d;
+})
+
+exit.remove();
+
+
+// 3. 柱形图
+// 见demo3
+
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "d3-learn",
+  "version": "1.0.0",
+  "description": "d3.js demo",
+  "main": "d3.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kuckboy1994/d3-learn.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kuckboy1994/d3-learn/issues"
+  },
+  "homepage": "https://github.com/kuckboy1994/d3-learn#readme",
+  "devDependencies": {
+    "live-server": "^1.2.0"
+  }
+}
