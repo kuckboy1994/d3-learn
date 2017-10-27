@@ -16,8 +16,10 @@ var height = 400;   //画布的高度
 
 var svg = d3.select("body")     //选择文档中的body元素
     .append("svg")          //添加一个svg元素
-    .attr("width", width)       //设定宽度
-    .attr("height", height);    //设定高度
+    .attr("preserveAspectRatio", "xMidYMid meet")
+            .attr("viewBox", "0 0 400 400")
+/*    .attr("width", width)       //设定宽度
+    .attr("height", height);    //设定高度*/
 
 
 var dataset = [ 30 , 10 , 43 , 55 , 13 ];
