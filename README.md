@@ -83,5 +83,8 @@ d3.js demo
     - 使用其他坐标系来考究自身的情况时使用
 
 
+## 例子
+- [d3-netchart](./example/d3-netchart/readme.md)
+
 ## 资料
-- [1](http://www.oxxostudio.tw/articles/201406/svg-08-text.html)
+- [SVG 研究之路 (8) - text 文字](http://www.oxxostudio.tw/articles/201406/svg-08-text.html)
