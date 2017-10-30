@@ -5,6 +5,7 @@
     <title>Document</title>
     <!-- <script src="d3.min.js"></script> -->
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> 
+    <script src="http://s.thsi.cn/js/jquery-1.8.3.min.js"></script>
     <style type="text/css">
     * {
         margin: 0;
@@ -12,7 +13,6 @@
     }
     #container {
         background-color: #171b20;
-        /*display: inline-block;*/
         border: 1px solid red;
     }
     .circle_line_3 {
@@ -31,7 +31,6 @@
         stroke-width: 4;
     }
     .d3_line {
-        z-index: 1;
         stroke: #1a2a28;
         stroke-width: 2px;
     }
@@ -42,25 +41,21 @@
     }
     .d3_boll_2 {
         fill: #59ce9e;
-        cursor: pointer;
     }
     .d3_boll_2_text {
         font-size: 14px;
         fill: #59ce9e;
-        text-anchor: middle;
     }
     .d3_boll_3 {
-        fill: #56dad5;
+        /*fill: #56dad5;*/
     }
     .d3_boll_3_text {
         font-size: 14px;
         fill: #56dad5;
-        text-anchor: middle;
     }
     .d3_boll_3_text_span {
         font-size: 14px;
         fill: #56dad5;
-        text-anchor: middle;
     }
     </style>
 </head>
@@ -135,7 +130,7 @@ data: [
     }
 ];
 
-var width = 900;  //画布的宽度
+var width = 1100;  //画布的宽度
 var height = 900;   //画布的高度
 
 var svg = d3.select("#container")     //选择文档中的body元素
@@ -143,7 +138,7 @@ var svg = d3.select("#container")     //选择文档中的body元素
     // .attr("width", width)       //设定宽度
     // .attr("height", height)    //设定高度
     .attr("preserveAspectRatio", "xMidYMid meet")
-    .attr("viewBox", "0 0 900 900")
+    .attr("viewBox", "0 0 1100 900")
 
 /* 子圈 */
 var circle_line_2_dataset = [180];
@@ -174,7 +169,7 @@ var circle_line_3 = svg.selectAll('.circle_line_3')
 /* 孙圈 */
 
 /* 线 */
-var line_dataset = [320, 320, 320, 320, 320, 320, 320]
+var line_dataset = [180, 320, 320, 180, 320, 320, 320, 320]
 
 var line_obj = svg.selectAll('.d3_line')
                     .data(line_dataset)
@@ -182,19 +177,19 @@ var line_obj = svg.selectAll('.d3_line')
                     .append('line')
                     .attr('class', 'd3_line')
                     .attr('x1', width/2)
-                    .attr('y1', width/2)
+                    .attr('y1', height/2)
                     .attr('x2', function (d, i) {
                         return width/2 + d * Math.sin(Math.PI*2*i/line_dataset.length);
                     })
                     .attr('y2', function (d, i) {
-                        return width/2 - d * Math.cos(Math.PI*2*i/line_dataset.length);
+                        return height/2 - d * Math.cos(Math.PI*2*i/line_dataset.length);
                     })
 /* 线 */
 
 /* 中心球 */
 var boll_1 = {
     cx: width / 2,
-    cy: width / 2,
+    cy: height / 2,
     r: 70
 };
 
@@ -215,17 +210,11 @@ var boll_1_text = svg.selectAll('d3_boll_1_text')
                     .append('text')
                     .attr('class', 'd3_boll_1_text')
                     .attr("x", function(d,i){
-                        return 450;
-                    } )
+                        return 550;
+                    })
                     .attr("y",function(d){
                         return 450;
                     })
-                    // .attr("dx",function(){
-                    //     return 0;
-                    // })
-                    // .attr("dy",function(d){
-                    //     return 0;
-                    // })
                     .text(function (d) {
                         return d;
                     })
@@ -236,11 +225,11 @@ var boll_1_text = svg.selectAll('d3_boll_1_text')
 /* 子球 */
 var boll_2 = {
     cx: width / 2,
-    cy: width / 2,
+    cy: height / 2,
     r: 30
 };
 
-var boll_2_dataset = ['啤酒需求下降啤酒需求下降','啤酒需求&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;','啤酒需求下降','啤酒需求下降','啤酒需求下降','啤酒需求下降','啤酒需求下降'];
+var boll_2_dataset = ['啤酒需求下降啤酒需求下降','啤酒需求','啤酒需求下降','啤酒需求下降','啤酒需求下降','啤酒需求下降','啤酒需求下降','啤酒需求下降'];
 
 var boll_2_obj = svg.selectAll('.d3_boll_2')
                     .data(boll_2_dataset)
@@ -251,18 +240,9 @@ var boll_2_obj = svg.selectAll('.d3_boll_2')
                         return width/2 + 180 * Math.sin(Math.PI*2*i/boll_2_dataset.length);
                     })
                     .attr('cy', function (d, i) {
-                        return width/2 - 180 * Math.cos(Math.PI*2*i/boll_2_dataset.length);
+                        return height/2 - 180 * Math.cos(Math.PI*2*i/boll_2_dataset.length);
                     })
-                    .attr('r', boll_2.r)
-                    .on('click', function (d, i) {
-                        if (d3.select(boll_3_obj[0][i]).attr('display') === 'block') {
-                            d3.select(boll_3_obj[0][i]).attr('display', 'none');
-                        } else {
-                            d3.select(boll_3_obj[0][i]).attr('display', 'block');
-                        }
-                        // if (d3.select(line_obj[0][i]).attr())
-
-                    });
+                    .attr('r', boll_2.r);
 
 var boll_2_text = svg.selectAll('d3_boll_2_text')
                     .data(boll_2_dataset)
@@ -270,41 +250,57 @@ var boll_2_text = svg.selectAll('d3_boll_2_text')
                     .append('text')
                     .attr('class', 'd3_boll_2_text')
                     .attr("x", function(d,i){
-                        return width/2 + 280 * Math.sin(Math.PI*2*i/boll_2_dataset.length);
+                        var temp = Math.sin(Math.PI*2*i/boll_2_dataset.length);
+                        if (temp < 0.0001 && temp > -0.0001) {
+                            return width/2 + 180 * temp;
+                        } else if (temp > 0) {
+                            return width/2 + 180 * temp + 40;
+                        } else if (temp < 0) {
+                            return width/2 + 180 * temp - 40;
+                        }
                     })
                     .attr("y",function(d,i){
                         if (Math.abs(Math.cos(Math.PI*2*i/boll_2_dataset.length)) === 1) {
-                            return width/2 + 5 - 230 * Math.cos(Math.PI*2*i/boll_2_dataset.length);
+                            return height/2 + 5 - 230 * Math.cos(Math.PI*2*i/boll_2_dataset.length);
                         }
-                        return width/2 + 5 - 180 * Math.cos(Math.PI*2*i/boll_2_dataset.length);
+                        return height/2 + 5 - 180 * Math.cos(Math.PI*2*i/boll_2_dataset.length);
                     })
                     .attr('title', function (d, i) {
                         return d;
                     })
-                    .attr('textLength', function (d, i) {
-                        return 100;
-                    })
-                    .attr('lengthAdjust','spacing')
-                    // .attr('lengthAdjust','spacingAndGlyphs')
-                    // .text(function (d) {
-                    //     return d;
-                    // })
                     .html(function (d) {
                         return d;
                     })
+                    .attr('text-anchor', function (d, i) {
+                        var temp = Math.sin(Math.PI*2*i/boll_2_dataset.length);
+                        if (temp < 0.0001 && temp > -0.0001) {
+                            return 'middle';
+                        } else if (temp > 0) {
+                            return 'start';
+                        } else if (temp < 0) {
+                            return 'end';
+                        }
+                    });
 
 /* 子球 */
 
 /* 孙球 */
 var boll_3 = {
     cx: width / 2,
-    cy: width / 2,
+    cy: height / 2,
     r: 30
 };
 
 var boll_3_dataset = [
         {
-            title: '(小麦胚芽油的上)',
+/*            title: '(小麦胚芽油的上游需求是啤酒)',
+            subtitle: [
+                '小米胚芽油需求上升1',
+                '小米胚芽油需求上升2',
+                '小米胚芽油需求上升3'
+            ]*/
+        },{
+            title: '(小麦胚芽油的上游需求是啤酒)',
             subtitle: [
                 '小米胚芽油需求上升1',
                 '小米胚芽油需求上升2',
@@ -318,27 +314,24 @@ var boll_3_dataset = [
                 '小米胚芽油需求上升3'
             ]
         },{
-            title: '(小麦胚芽油的上)',
-            subtitle: [
-                '小米胚芽油需求上升4'
-            ]
+
         },{
-            title: '(小麦胚芽油的上)',
-            subtitle: [
-                '小米胚芽油需求上升5'
-            ]
-        },{
-            title: '(小麦胚芽油的上)',
+            title: '(小麦胚芽油的上游需求是啤酒)',
             subtitle: [
                 '小米胚芽油需求上升6'
             ]
         },{
-            title: '(小麦胚芽油的上)',
+            title: '(小麦胚芽油的上游需求是啤酒)',
             subtitle: [
                 '小米胚芽油需求上升7'
             ]
         },{
-            title: '(小麦胚芽油的上)',
+            title: '(小麦胚芽油的上游需求是啤酒)',
+            subtitle: [
+                '小米胚芽油需求上升8'
+            ]
+        },{
+            title: '(小麦胚芽油的上游需求是啤酒)',
             subtitle: [
                 '小米胚芽油需求上升8'
             ]
@@ -353,10 +346,17 @@ var boll_3_obj = svg.selectAll('.d3_boll_3')
                         return width/2 + 320 * Math.sin(Math.PI*2*i/boll_3_dataset.length);
                     })
                     .attr('cy', function (d, i) {
-                        return width/2 - 320 * Math.cos(Math.PI*2*i/boll_3_dataset.length);
+                        return height/2 - 320 * Math.cos(Math.PI*2*i/boll_3_dataset.length);
                     })
                     .attr('r', boll_3.r)
                     .attr('display', 'block')
+                    .attr('fill', function (d) {
+                        if (d.subtitle) {
+                            return '#56dad5';
+                        } else {
+                            return 'none';
+                        }
+                    });
                     
 
 var boll_3_text = svg.selectAll('d3_boll_3_text')
@@ -365,41 +365,74 @@ var boll_3_text = svg.selectAll('d3_boll_3_text')
                     .append('text')
                     .attr('class', 'd3_boll_3_text')
                     .attr("x", function(d,i){
-                        return width/2 + 440 * Math.sin(Math.PI*2*i/boll_3_dataset.length);
+                        var temp = Math.sin(Math.PI*2*i/boll_3_dataset.length);
+                        if (temp < 0.0001 && temp > -0.0001) {
+                            return width/2 + 320 * temp;
+                        } else if (temp > 0) {
+                            return width/2 + 320 * temp + 40;
+                        } else if (temp < 0) {
+                            return width/2 + 320 * temp - 40;
+                        }
                     } )
                     .attr("y",function(d,i){
                         if (Math.abs(Math.cos(Math.PI*2*i/boll_3_dataset.length)) === 1) {
-                            return width/2 + 5 - 370 * Math.cos(Math.PI*2*i/boll_3_dataset.length);
+                            return height/2 + 5 - 370 * Math.cos(Math.PI*2*i/boll_3_dataset.length);
                         }
-                        return width/2 + 5 - 320 * Math.cos(Math.PI*2*i/boll_3_dataset.length);
+                        return height/2 + 5 - 320 * Math.cos(Math.PI*2*i/boll_3_dataset.length);
                     })
-                    .text(function (d, i) {
+                    .text(function (d, i){
+                        if (d.subtitle) {
+                            var span = svg.selectAll('d3_boll_3_text_span')
+                                .data(d.subtitle)
+                                .enter()
+                                .append('text')
+                                .attr('class', 'd3_boll_3_text_span')
+                                .text(function (d, i) {
+                                    return d;
+                                })
+                                .attr('x', function (dd, ii) {
+                                    var temp = Math.sin(Math.PI*2*i/boll_3_dataset.length);
+                                    if (temp < 0.0001 && temp > -0.0001) {
+                                        return width/2 + 320 * temp;
+                                    } else if (temp > 0) {
+                                        return width/2 + 320 * temp + 40;
+                                    } else if (temp < 0) {
+                                        return width/2 + 320 * temp - 40;
+                                    }
+                                })
+                                .attr('y', function (dd, ii) {
+                                    if (Math.cos(Math.PI*2*i/boll_3_dataset.length) === 1) {
+                                        return height/2 + 5 - 370 * Math.cos(Math.PI*2*i/boll_3_dataset.length) - (ii+1) * 20;
+                                    }
+                                    if (Math.cos(Math.PI*2*i/boll_3_dataset.length) === -1) {
+                                        return height/2 + 5 - 370 * Math.cos(Math.PI*2*i/boll_3_dataset.length) + (ii+1) * 20;
+                                    }
+                                    return height/2 + 5 - 320 * Math.cos(Math.PI*2*i/boll_3_dataset.length) - (ii+1) * 20;
+                                })
+                                .attr('text-anchor', function (dd, ii) {
+                                    var temp = Math.sin(Math.PI*2*i/boll_3_dataset.length);
+                                    if (temp < 0.0001 && temp > -0.0001) {
+                                        return 'middle';
+                                    } else if (temp > 0) {
+                                        return 'start';
+                                    } else if (temp < 0) {
+                                        return 'end';
+                                    }
+                                });
+                        }
                         return d.title;
                     })
-                    .html(function (d, i){
-                        var span = svg.selectAll('d3_boll_3_text_span')
-                            .data(d.subtitle)
-                            .enter()
-                            .append('text')
-                            .attr('class', 'd3_boll_3_text_span')
-                            .text(function (d, i) {
-                                return d;
-                            })
-                            .attr('x', function (dd, ii) {
-                                return width/2 + 440 * Math.sin(Math.PI*2*i/boll_3_dataset.length);
-                            })
-                            .attr('y', function (dd, ii) {
-                                if (Math.cos(Math.PI*2*i/boll_3_dataset.length) === 1) {
-                                    return width/2 + 5 - 370 * Math.cos(Math.PI*2*i/boll_3_dataset.length) - (ii+1) * 20;
-                                }
-                                if (Math.cos(Math.PI*2*i/boll_3_dataset.length) === -1) {
-                                    return width/2 + 5 - 370 * Math.cos(Math.PI*2*i/boll_3_dataset.length) + (ii+1) * 20;
-                                }
-                                return width/2 + 5 - 320 * Math.cos(Math.PI*2*i/boll_3_dataset.length) - (ii+1) * 20;
-                            });
-                        // console.log(span);
-                        return d.title;
+                    .attr('text-anchor', function (d, i) {
+                        var temp = Math.sin(Math.PI*2*i/boll_3_dataset.length);
+                        if (temp < 0.0001 && temp > -0.0001) {
+                            return 'middle';
+                        } else if (temp > 0) {
+                            return 'start';
+                        } else if (temp < 0) {
+                            return 'end';
+                        }
                     })
+                    
                     
 
 /* 孙球 */
