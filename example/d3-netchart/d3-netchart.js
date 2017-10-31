@@ -1,3 +1,4 @@
+//@charset "utf-8";
 function D3netchart () {
 	if (typeof arguments[0].elId === 'undefined') {
 		console.error('Missing Parameters "elId"');
@@ -202,7 +203,7 @@ D3netchart.prototype = {
 			.enter()
 			.append('text')
 			.attr('class', 'd3_boll_2_text')
-			.attr("x", function(d,i){
+			.attr("x", function(d, i){
 				var temp = Math.sin(Math.PI*2*i/self.childData.length);
 				if (temp < 0.0001 && temp > -0.0001) {
 					return self.width/2 + 180 * temp;
@@ -212,14 +213,14 @@ D3netchart.prototype = {
 					return self.width/2 + 180 * temp - 40;
 				}
 			})
-			.attr("y",function(d,i){
+			.attr("y",function(d, i){
 				if (Math.abs(Math.cos(Math.PI*2*i/self.childData.length)) === 1) {
 					return self.height/2 + 5 - 230 * Math.cos(Math.PI*2*i/self.childData.length);
 				}
 				return self.height/2 + 5 - 180 * Math.cos(Math.PI*2*i/self.childData.length);
 			})
-			.text(function (d) {
-				return d;
+			.html(function (d) {
+				return '<title>' + d + '</title>' + d;
 			})
 			.attr('text-anchor', function (d, i) {
 				var temp = Math.sin(Math.PI*2*i/self.childData.length);
@@ -276,15 +277,15 @@ D3netchart.prototype = {
 				}
 				return self.height/2 + 5 - 320 * Math.cos(Math.PI*2*i/self.grandsonData.length);
 			})
-			.text(function (d, i){
+			.html(function (d, i){
 				if (d.subtitle) {
 					self.svg.selectAll('d3_boll_3_text_span')
 						.data(d.subtitle)
 						.enter()
 						.append('text')
 						.attr('class', 'd3_boll_3_text_span')
-						.text(function (d, i) {
-							return d;
+						.html(function (d, i) {
+							return '<title>' + d + '</title>' + d;
 						})
 						.attr('x', function (dd, ii) {
 							var temp = Math.sin(Math.PI*2*i/self.grandsonData.length);
@@ -317,7 +318,9 @@ D3netchart.prototype = {
 						})
 						.attr('fill', self.grandsonBoll.color);
 				}
-				return d.title;
+				if (d.title) {
+					return '<title>' + d.title + '</title>' + d.title;
+				}
 			})
 			.attr('text-anchor', function (d, i) {
 				var temp = Math.sin(Math.PI*2*i/self.grandsonData.length);
