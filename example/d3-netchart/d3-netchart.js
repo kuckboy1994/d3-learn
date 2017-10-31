@@ -14,6 +14,7 @@ function D3netchart () {
 		fontSize: '20px',
 		fontWeight: 'bold'
 	};
+	this.fontFamily = 'Microsoft YaHei';
 	this.backgroundColor = '#171b20';
 	this.lineColor = '#1a2a28';
 	this.originBoll = {
@@ -50,7 +51,6 @@ D3netchart.prototype = {
 		self.createOuterCircle();
 		self.createRadiationLine();
 		self.createOrigin();
-		
 		self.createOuterBoll();
 		self.createInnerBoll();
 	},
@@ -82,7 +82,8 @@ D3netchart.prototype = {
 		this.svg = d3.select("#"+this.elId)	//选择文档中的body元素
 			.append("svg")					//添加一个svg元素
 			.attr("preserveAspectRatio", "xMidYMid meet")
-			.attr("viewBox", "0 0 "+this.width+" "+this.height);
+			.attr("viewBox", "0 0 "+this.width+" "+this.height)
+			.attr('font-family', this.fontFamily);
 	},
 	createInnerCircle: function () {
 		this.svg.selectAll('#' + this.elId + ' .circle_line_2')
@@ -146,21 +147,37 @@ D3netchart.prototype = {
 			.attr('stroke', this.originBoll.borderColor)
 			.attr('stroke-width', this.originBoll.borderWidth);
 
+		var textlength = self.title.text.length;
+		var newText = [];
+		if (textlength > 12) {
+			newText.push(self.title.text.substr(0,6));
+			newText.push(self.title.text.substr(6,6) + '...');
+		} else if (textlength > 6) {
+			newText.push(self.title.text.substr(0,6));
+			newText.push(self.title.text.substr(6,6));
+		} else {
+			newText.push(self.title.text);
+		}
+		
 		self.svg.selectAll('d3_boll_1_text')
-			.data([self.title.text])
+			.data(newText)
 			.enter()
 			.append('text')
 			.attr('class', 'd3_boll_1_text')
 			.attr("x", function(d,i){
 				return self.width/2;
 			})
-			.attr("y",function(d){
-				return self.height/2;
+			.attr("y",function(d, i){
+				if (newText.length === 1) {
+					return self.height/2 + 8;
+				} else {
+					return self.height/2 + i * 22;
+				}
 			})
-			.text(function (d) {
-				return d;
+			.html(function (d) {
+				return '<title>' + self.title.text + '</title>' + d;
 			})
-			.attr('font-size', '20px')
+			.attr('font-size', this.title.fontSize)
 			.attr('fill', this.originBoll.color)
 			.attr('text-anchor', 'middle');
 	},
@@ -200,9 +217,6 @@ D3netchart.prototype = {
 					return self.height/2 + 5 - 230 * Math.cos(Math.PI*2*i/self.childData.length);
 				}
 				return self.height/2 + 5 - 180 * Math.cos(Math.PI*2*i/self.childData.length);
-			})
-			.attr('title', function (d, i) {
-				return d;
 			})
 			.text(function (d) {
 				return d;
